@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shop Trang Phục Trung Quốc Cao Cấp</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root{--accent:#d81b60;--accent-hover:#b3164d;--muted:#6b7280;--bg:#f8fafc;--card-bg:#fff}
+    *{box-sizing:border-box}
+    body{font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;margin:0;background:var(--bg);color:#111}
+    header{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.08);position:sticky;top:0;z-index:100;}
+    .container{max-width:1200px;margin:0 auto;padding:16px;}
+    .nav{display:flex;align-items:center;justify-content:space-between;}
+    .logo{font-weight:700;font-size:20px;color:var(--accent)}
+    .search input{width:260px;padding:10px 12px;border-radius:20px;border:1px solid #ddd;font-size:14px;}
+    .actions{display:flex;align-items:center;gap:16px;}
+    .btn{background:var(--accent);color:#fff;padding:10px 16px;border-radius:24px;border:none;cursor:pointer;font-weight:500;transition:background .3s}
+    .btn:hover{background:var(--accent-hover)}
+
+    .hero{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:40px 16px;background:linear-gradient(90deg,#fff,#fdeef4);}
+    .hero-text{max-width:520px;}
+    .hero-text h1{font-size:36px;margin:0;color:#222;}
+    .hero-text p{color:var(--muted);font-size:16px;margin:16px 0;}
+    .hero img{width:480px;max-width:100%;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,0.08)}
+
+    h2{font-size:26px;margin-bottom:8px;color:#222;}
+    .products{padding:40px 16px;}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:24px;}
+    .card{background:var(--card-bg);border-radius:14px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.05);display:flex;flex-direction:column;transition:transform .2s}
+    .card:hover{transform:translateY(-4px)}
+    .card img{width:100%;height:280px;object-fit:cover;}
+    .card-content{padding:14px;flex:1;display:flex;flex-direction:column;}
+    .card h3{font-size:18px;margin:0 0 8px;color:#222;}
+    .price{font-size:16px;font-weight:700;color:#000;margin-bottom:8px;}
+    .meta{margin-top:auto;display:flex;justify-content:space-between;align-items:center;}
+
+    .cart-btn{position:relative;background:none;border:none;color:var(--accent);font-size:20px;cursor:pointer;}
+    .cart-count{position:absolute;top:-6px;right:-8px;background:var(--accent);color:#fff;border-radius:50%;padding:4px 7px;font-size:12px;}
+
+    .cart-panel{position:fixed;right:24px;top:90px;width:380px;max-width:95%;background:#fff;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.15);padding:18px;display:none;z-index:999;}
+    .cart-panel.open{display:block;animation:fadeIn .3s ease}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:translateY(0);}}
+    .cart-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #eee}
+    .cart-item img{width:64px;height:64px;border-radius:8px;object-fit:cover;}
+    .qty{display:flex;gap:6px;align-items:center;margin-top:4px;}
+    .qty button{width:28px;height:28px;border-radius:6px;border:1px solid #ccc;background:#fff;cursor:pointer;font-weight:bold;}
+    .checkout{display:flex;justify-content:space-between;align-items:center;margin-top:14px;font-size:16px;font-weight:600}
+
+    footer{text-align:center;padding:20px;color:var(--muted);font-size:14px;border-top:1px solid #eee;margin-top:40px}
+
+    .details-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:1000;}
+    .details-overlay.open{display:flex;animation:fadeIn .3s ease;}
+    .details-card{background:#fff;border-radius:12px;max-width:700px;width:90%;padding:20px;display:flex;gap:20px;flex-wrap:wrap;}
+    .details-card img{width:300px;border-radius:10px;object-fit:cover;}
+    .details-content{flex:1;}
+    .details-content h3{margin:0 0 10px;font-size:24px;color:#222;}
+    .details-content p{color:#555;line-height:1.5;margin-bottom:12px;}
+  </style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <div class="logo">BảoChiNA Shop</div>
+    <div class="search"><input id="search" placeholder="Tìm: hanfu, qipao..." /></div>
+    <div class="actions">
+      <button id="openCart" class="cart-btn"><i class="fas fa-shopping-cart"></i><span id="cartCount" class="cart-count">0</span></button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-text">
+    <h1>Bộ Sưu Tập Hanfu & Qipao Cao Cấp</h1>
+    <p>Phong cách truyền thống hòa quyện hiện đại. Vải cao cấp, đường may tinh tế. Giao hàng toàn quốc.</p>
+    <button class="btn" onclick="scrollToProducts()">Khám phá ngay</button>
+  </div>
+  <img src="https://suppothomap.com/wp-content/uploads/2024/02/Han-phuc-co-trang-nam-van-hoa-truyen-thong-Trung-Quoc7.jpg" alt="Trang Phục Trung Quốc">
+</section>
+
+<main class="container products">
+  <h2>Sản phẩm nổi bật</h2>
+  <div style="margin-bottom:10px;color:var(--muted)">Tìm thấy <span id="totalProducts">0</span> sản phẩm</div>
+  <div id="productGrid" class="grid"></div>
+</main>
+
+<div id="cartPanel" class="cart-panel" aria-hidden="true">
+  <h3 style="margin-top:0">Giỏ hàng</h3>
+  <div id="cartItems"></div>
+  <div class="checkout">
+    <span>Tổng: <span id="cartTotal">0₫</span></span>
+    <button id="checkoutBtn" class="btn" style="padding:8px 14px">Thanh toán</button>
+  </div>
+</div>
+
+<div id="detailsOverlay" class="details-overlay">
+  <div class="details-card">
+    <img id="detailsImage" src="https://suppothomap.com/wp-content/uploads/2024/02/Han-phuc-co-trang-nam-van-hoa-truyen-thong-Trung-Quoc7.jpg" alt="https://suppothomap.com/wp-content/uploads/2024/02/Han-phuc-co-trang-nam-van-hoa-truyen-thong-Trung-Quoc7.jpg">
+    <div class="details-content">
+      <h3 id="detailsTitle"></h3>
+      <p id="detailsDesc">Mô tả sản phẩm chi tiết sẽ hiển thị tại đây.</p>
+      <div class="price" id="detailsPrice"></div>
+      <button class="btn" id="detailsAdd">Thêm vào giỏ</button>
+      <button style="margin-left:10px;border:none;background:none;color:var(--muted);cursor:pointer;font-size:14px" onclick="closeDetails()">Đóng</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © <span id="year"></span> Trang Phục Trung Hoa — Hotline: 0909 123 456 | Email: info@trangphuc.com
+</footer>
+
+<script>
+const products=[
+ {id:1,name:'Hanfu Cổ Trang Hoa Lụa',price:750000,image:'https://ae-pic-a1.aliexpress-media.com/kf/Sa688d05c3d7246b0b33c154eec4a5804u.jpg',desc:'Hanfu nữ cao cấp, chất liệu lụa mềm mịn, họa tiết hoa tinh tế, phù hợp chụp ảnh, lễ hội.'},
+ {id:2,name:'Qipao Đỏ Cao Cấp',price:890000,image:'https://img.bestdealplus.com/ae04/kf/Hbf03c6975b2740bd87db5bea1d6a7a2ad.jpg',desc:'Qipao đỏ truyền thống, form ôm vừa phải, tôn dáng và sang trọng.'},
+ {id:3,name:'Tang Suit Nam Truyền Thống',price:620000,image:'https://gd1.alicdn.com/imgextra/i4/2993203968/TB2xAxSbb5YBuNjSspoXXbeNFXa_!!2993203968.jpg_400x400.jpg_.webp',desc:'Tang suit nam phong cách cổ điển, chất vải thoáng mát, thoải mái mặc dịp lễ.'},
+ {id:4,name:'Hanfu Trẻ Em Dễ Thương',price:4000080000,image:'https://gw.alicdn.com/imgextra/i1/3937219703/O1CN0103fHii2LY1yqddCVV_!!3937219703-2-C2M.png_540x540.jpg',desc:'Hanfu cho bé, kiểu dáng đáng yêu, màu sắc tươi sáng, an toàn cho da nhạy cảm.'},
+ {id:5,name:'Hanfu lễ hội',price:1000000,image:'https://style-chinois.com/cdn/shop/files/Se9ee0f74af4a4b179cff8cbf1c602d8d8_2000x.webp?v=1721043444',desc:'Hanfu cho bé, kiểu dáng đáng yêu, màu sắc tươi sáng, an toàn cho da nhạy cảm.'},
+ {id:6,name:'1 Con BÒ Cute',price:50000,image:'https://nhahangdungtien.com/images/2023/11/27/large/5072giong-bo-thit-tot-nhat-hien-nay-1.jpg',desc:'Con Bò cho bé, kiểu dáng đáng yêu, màu sắc tươi sáng, an toàn cho da nhạy cảm.'},
+ {id:7,name:'1 Con TRâu Dth',price:55000,image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbPZtpZgEGfclCjskSnHQ9mrnGCgiu4Lq2OQ&s',desc:'Con TRâu cho bé, kiểu dáng đáng yêu và hoạt bác, màu sắc tươi sáng, an toàn cho da nhạy cảm.'},
+ {id:7,name:'1 Con Heo Bell',price:70000,image:'https://i1.sndcdn.com/artworks-000078242096-cq8ceq-t500x500.jpg',desc:'Con Heo cho bé, kiểu dáng đáng yêu và hoạt bác, màu sắc tươi sáng, an toàn cho da nhạy cảm.'}
+];
+const grid=document.getElementById('productGrid');
+const totalProductsEl=document.getElementById('totalProducts');
+const cartPanel=document.getElementById('cartPanel');
+const cartItemsEl=document.getElementById('cartItems');
+const cartTotalEl=document.getElementById('cartTotal');
+const cartCount=document.getElementById('cartCount');
+let cart=JSON.parse(localStorage.getItem('cart_v2')||'{}');
+
+function formatVND(n){return n.toLocaleString('vi-VN')+'₫';}
+function renderProducts(list){grid.innerHTML='';list.forEach(p=>{const card=document.createElement('div');card.className='card';card.innerHTML=`<img src="${p.image}" alt="${p.name}" onclick="showDetails(${p.id})"><div class=\"card-content\"><h3>${p.name}</h3><div class=price>${formatVND(p.price)}</div><div class=meta><button class=btn onclick=\"addToCart(${p.id})\">Thêm</button><button style=\"border:none;background:none;color:var(--accent);cursor:pointer;font-size:14px\" onclick=\"showDetails(${p.id})\">Chi tiết</button></div></div>`;grid.appendChild(card);});totalProductsEl.textContent=list.length;}
+renderProducts(products);
+
+document.getElementById('search').addEventListener('input',e=>{const q=e.target.value.trim().toLowerCase();const filtered=products.filter(p=>p.name.toLowerCase().includes(q));renderProducts(filtered);});
+
+function saveCart(){localStorage.setItem('cart_v2',JSON.stringify(cart));updateCartUI();}
+function updateCartUI(){const items=Object.values(cart);cartCount.textContent=items.reduce((s,i)=>s+i.qty,0)||0;cartItemsEl.innerHTML='';let total=0;if(items.length===0){cartItemsEl.innerHTML='<div style="color:var(--muted);padding:12px 0">Giỏ hàng trống</div>';}items.forEach(it=>{total+=it.qty*it.price;const el=document.createElement('div');el.className='cart-item';el.innerHTML=`<img src="${it.image}"><div style=\"flex:1\"><div style=\"font-weight:600\">${it.name}</div><div style=\"color:var(--muted);font-size:13px\">${formatVND(it.price)} x ${it.qty}</div><div class=qty><button onclick=\"changeQty(${it.id},-1)\">-</button><div>${it.qty}</div><button onclick=\"changeQty(${it.id},1)\">+</button><button style=\"margin-left:8px;color:#d11;background:none;border:none;cursor:pointer\" onclick=\"removeItem(${it.id})\">Xóa</button></div></div>`;cartItemsEl.appendChild(el);});cartTotalEl.textContent=formatVND(total);}
+
+function addToCart(id){const p=products.find(x=>x.id===id);if(!p)return;if(cart[id])cart[id].qty+=1;else cart[id]={...p,qty:1};saveCart();}
+function changeQty(id,delta){if(!cart[id])return;cart[id].qty+=delta;if(cart[id].qty<1)delete cart[id];saveCart();}
+function removeItem(id){delete cart[id];saveCart();}
+
+document.getElementById('openCart').addEventListener('click',()=>{cartPanel.classList.toggle('open');});
+document.getElementById('checkoutBtn').addEventListener('click',()=>{const items=Object.values(cart);if(items.length===0){alert('Giỏ hàng trống');return;}const total=items.reduce((s,i)=>s+i.qty*i.price,0);alert('Thanh toán thành công! Tổng: '+formatVND(total));cart={};saveCart();cartPanel.classList.remove('open');});
+
+window.addToCart=addToCart;window.changeQty=changeQty;window.removeItem=removeItem;
+
+function scrollToProducts(){window.scrollTo({top:document.querySelector('.products').offsetTop-20,behavior:'smooth'});}
+document.getElementById('year').textContent=new Date().getFullYear();updateCartUI();
+
+// Details modal
+function showDetails(id){const p=products.find(x=>x.id===id);if(!p)return;document.getElementById('detailsImage').src=p.image;document.getElementById('detailsTitle').textContent=p.name;document.getElementById('detailsDesc').textContent=p.desc;document.getElementById('detailsPrice').textContent=formatVND(p.price);document.getElementById('detailsOverlay').classList.add('open');document.getElementById('detailsAdd').onclick=function(){addToCart(id);closeDetails();};}
+function closeDetails(){document.getElementById('detailsOverlay').classList.remove('open');}
+window.showDetails=showDetails;window.closeDetails=closeDetails;
+</script>
+</body>
+</html>
